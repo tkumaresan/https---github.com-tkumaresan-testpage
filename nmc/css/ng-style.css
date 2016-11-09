@@ -1,0 +1,58 @@
+/* contains styles that are required for angularjs */
+
+/* 
+  Allow angular.js to be loaded in body, hiding cloaked elements until 
+  templates compile.  The !important is important given that there may be 
+  other selectors that are more specific or come later and might alter display.  
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+/*
+animation required for route transistion
+.ng-enter will be dynamically added by ngroute on every sucessfull redirect
+to know more refer ng-animation
+*/
+.view-frame.ng-enter {
+  -webkit-animation: 1s fade-in;
+  -moz-animation: 1s fade-in;
+  -o-animation: 1s fade-in;
+  animation: 1s fade-in;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@-webkit-keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/*
+animation required for ng-repeat
+repeat-appear - fade in and fade out when a new row is added are removed
+*/
+.repeat-appear.ng-enter, 
+.repeat-appear.ng-leave
+{ 
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+ 
+.repeat-appear.ng-leave.ng-leave-active,
+.repeat-appear.ng-enter {
+    opacity: 0;
+}
+ 
+.repeat-appear.ng-enter.ng-enter-active, 
+.repeat-appear.ng-leave {
+    opacity: 1;
+}

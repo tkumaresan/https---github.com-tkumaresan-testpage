@@ -1,0 +1,14 @@
+/*Any customization on top of custom-bootstrap for white theme has to be here*/
+.primary-button, 
+.primary-button:active, 
+.primary-button:hover, 
+.primary-button:focus {color: #000000; border-color: #999;}
+.primary-dropdown{color: #000000; border-color: #999;background-color: #fff;}
+.primary-dropdown li> a{color: #000000}
+.primary-text	{border:1px solid #999; color:#000000; }
+
+/*Modal custom*/
+.modal-footer {background-color:#e8e8e8;}
+.modal-body{background-color:#e8e8e8 }
+.modal-body label {color:#000000;}
+

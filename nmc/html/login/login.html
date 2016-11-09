@@ -1,0 +1,23 @@
+<div class="main" ng-controller="loginController" >
+	<form name="loginForm" autocomplete="off" class="login-form" id="LoginForm" ng-submit="loginSubmit()" ng-cloak>
+		<div class="login-form-header clearfix">
+			<h2>Login</h2>
+			<div class="login-to bb-login-title" ng-hide="true"><span class="default">Investors Destination</span></div>
+		</div>
+		<ul class="login-form-inputs formAttributes">
+			<li>
+				<div ng-if="loginError" class="alert-login floatLT" ng-bind="errorMsg"></div>
+			</li>
+			<li><input name="username" ng-class="{username: true, 'has-error' : loginError}" required type="text" value="" placeholder="Enter Username" tabindex="1" ng-model="username" id="username" ></li>
+	
+			<li><input name="password" ng-class="{ChangedTypePass: true, 'has-error' : loginError}" required type="password" value="" placeholder="Enter Password" tabindex="2" ng-model="password" id="password" ></li>
+		</ul>
+		<div class="login-form-submit-container formAttributes">
+			<input type="submit" class="submit-btn floatLT login-submit-btn" tabindex="4" value="Login">
+			<div class="forgot-pwd floatLT">
+				<a href="#/forgot-password" class="forget blue">Forgot your password?</a>
+			</div>
+		</div>
+		<div class="secure-icon">&nbsp;</div>
+	</form>
+</div>

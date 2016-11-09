@@ -1,0 +1,145 @@
+<!doctype html>
+<html ng-app="coalesce" ng-controller="Root">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+<title>Coalesce | Home</title>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/select.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link ng-if="isHomePage" rel="stylesheet" type="text/css" href="../css/home.css" />
+<link rel="stylesheet" type="text/css" href="../css/ng-style.css" />
+<link ng-if="!blue" rel="stylesheet" type="text/css" href="../css/theme-white.css">
+<link ng-if="blue" rel="stylesheet" type="text/css" href="../css/theme-blue.css">
+<link rel="stylesheet" type="text/css" href="../css/Bootstrap/bootstrap.min.css"></link>
+<link rel="stylesheet" type="text/css" href="../css/custom-bootstrap.css"></link>
+<link ng-if="!blue" rel="stylesheet" type="text/css" href="../css/custom-bootstrap-white.css">
+<link rel="stylesheet" type="text/css" href="../css/angular/angular-growl.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="cls_header">
+		<!--header start-->
+		<div class="cls_header_wrapper">
+			<div class="pad_zero logo">
+				<a href="#home.html"><img
+					src="../images/blue/logo.png" alt="logo"></a>
+			</div>
+			<div class="col-lg-6 menu" >
+				<nav ng-if="!isHomePage" class="navbar navbar-default no-margin" role="navigation">
+
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed pull-left"
+							data-toggle="collapse" data-target="#bs-slide-dropdown">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-slide-dropdown">
+						<ul class="nav navbar-nav">
+							<li><a ng-href="#myalerts" ng-class="{selected : hasPath('myalerts')}">Alerts</a></li>
+							<li><a ng-href="#company-profile-summary" ng-class="{selected : hasPath('company-profile-summary')}">Deal
+									Profiles</a></li>
+							<li><a ng-href="#advanced-search-result" ng-class="{selected : hasPath('advanced-search-result')}">Find
+									Deals</a></li>
+							<!-- 
+							<li><a ng-href="#company-profile-detail" ng-class="{selected : hasPath('company-profile-detail')}">Ask
+									Watson</a></li>
+							 -->
+							<li><a ng-href="#user-model" ng-class="{selected : hasPath('user-model')}">Model</a></li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</nav>
+				<div class="ajax-loader"><i ng-class="{'fa fa-refresh fa-spin fa-4x':showAjaxLoader}"></i></div>
+			</div>
+			<form ng-submit="searchCompany()">
+	   		<div class="search_question">
+        		<input placeholder="Find Here..." class="pull-left" type="text" ng-model="searchString" id="inputSuccess4">
+        		<a href="" title="Click to Find" class="search-icon-holder">
+						<!-- <span class="glyphicon glyphicon-search banner-search-icon" ng-click="searchCompany()"></span> -->
+						<span class="glyphicon banner-search-icon" ng-class="{' glyphicon-search':!loadingSearchResults, 'fa fa-refresh fa-spin fa-2x':loadingSearchResults}"  ng-click="searchCompany()"></span>
+				</a>
+	        </div>
+	        </form>
+			
+			<!--<div id="user_icon"></div>-->
+			<div>
+				<button id="user_icon" ng-click="toggle('dropDownContainer')" class="fa fa-bars"></button>
+				<span id="dropDownContainer" class="pull-right">
+					<ul class="pwd_change">
+						<li><a ng-click="openModal('partials/change-password.html')"
+							href><i class="fa fa-key"></i> Change Password</a></li>
+						<li><a ng-click="openModal('partials/change-email.html')" href><i class="fa fa-envelope"></i> Update Email ID</a></li>
+						<li><a ng-click="openModal('partials/theme-selection.html')" href><i class="fa fa-paint-brush"></i> Change Theme</a></li>
+						<li><a ng-click="switchTheme()" href><i class="fa fa-paint-brush"></i> Switch Theme</a></li>
+						<!-- <li><a href="#/user-model"><i class="fa fa-retweet"></i>Model</a></li> -->
+						<li><a ng-click="logout()" href><i class="fa fa-sign-out"></i> Logout</a></li>
+					</ul>
+				</span> 
+			</div>
+
+		</div>
+
+	</div>
+	<!--header end-->
+	<div class="view-frame" ng-view style="min-height:500px"></div>
+	<div class="ftr_space"></div>
+	<footer>
+		<p class="footertext">&copy; 2015, Coalesce Inc. All rights
+			reserved.</p>
+	</footer>
+	<script type="text/javascript" src="../js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/jquery/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<script type="text/javascript" src="../js/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../js/angular/angular-route.min.js"></script>
+	<script type="text/javascript" src="../js/angular/angular-animate.min.js"></script>
+	<script type="text/javascript" src="../js/angular/angular-growl.js"></script>
+
+	<script type="text/javascript" src="../js/Bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/Bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+
+	<!-- third party -->
+	<script type="text/javascript" src="../js/thirdparty/slider/slider.js"></script>
+	<script type="text/javascript" src="../js/thirdparty/moment/moment.min.js"></script>
+	<script type="text/javascript" src="../js/thirdparty/ng-scroll/ng-infinite-scroll.min.js"></script>
+	<script type="text/javascript" src="../js/thirdparty/angular-filter-min.js"></script>
+	<script type="text/javascript" src="../js/thirdparty/highCharts/highcharts.min.js"></script>
+	<script type="text/javascript" src="../js/thirdparty/highCharts/highcharts-3d.min.js"></script>
+	<script type="text/javascript" src="../js/thirdparty/select.min.js"></script>
+
+	<!-- App -->
+	<script type="text/javascript" src="../js/app/common/app.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/custom.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/constants.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/HTTPConnection.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/URL.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/DateUtils.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/charts.js"></script>
+	<script type="text/javascript" src="../js/app/common/service/utilities.js"></script>
+
+	<!-- Home -->
+	<script type="text/javascript" src="../js/app/home/controller.js"></script>
+	<script type="text/javascript" src="../js/app/myalerts/controller.js"></script>
+	<script type="text/javascript" src="../js/app/deals/controller.js"></script>
+	<script type="text/javascript" src="../js/app/profile/controller.js"></script>
+	<script type="text/javascript" src="../js/app/userCreateModel/controller.js"></script>
+	<script type="text/javascript" src="../js/app/profile/chartOptions.js"></script>
+	<script type="text/javascript" src="../js/app/profile/converter.js"></script>
+	<script type="text/javascript" src="../js/app/search/controller.js"></script>
+
+	<!-- Directives -->
+	<script type="text/javascript" src="../js/app/common/directives/dropdowndirective.js"></script>
+	<script type="text/javascript" src="../js/app/common/directives/moreless.js"></script>
+
+	<script type="text/javascript" src="../js/blue/script.js"></script>
+
+</body>
+</html>

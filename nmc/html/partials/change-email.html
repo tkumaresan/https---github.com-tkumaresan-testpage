@@ -1,0 +1,42 @@
+<div ng-controller="updateEmail">
+   	<form name="MyForm" class="form-horizontal">
+      <div class="modal-header">
+      	  <button type="button" ng-click="closeModal()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title"><i class="fa fa-envelope"></i> Change Email</h3>
+      </div>
+      <div class="modal-body">
+		  <div ng-show="verificationCodeSent" class="alert alert-warning" role="alert">
+			  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+			  <span class="sr-only">Warning:</span>
+			  <span ng-show="newCode && !showError">
+			  	An verification code has been sent to your email. Please enter the code and click confirm button. The code will expire in 10 mins.
+			  </span>
+			  <span ng-show="existingCode && !showError">
+			  	Please enter the email id and the verification code and click confirm button.
+			  </span>
+			  <span ng-show="showError">
+			  	{{errorMsg}}
+			  </span>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-sm-4 control-label">Email</label>
+		    <div class="col-sm-6">
+		      	<span ng-hide="verificationCodeSent && !existingCode"><input type="email" class="form-control primary-text" ng-model="email.text" ng-required="true"></span>
+		      	<span ng-show="verificationCodeSent && !existingCode"><input type="email" class="form-control primary-text" ng-model="email.text" disabled></span>
+		    </div>
+		  </div>
+		  <div ng-if="verificationCodeSent" class="form-group">
+		    <label class="col-sm-4 control-label">Verification Code</label>
+		    <div class="col-sm-6">
+		      	<input type="text" class="form-control primary-text" ng-model="email.code" ng-required="true">
+		    </div>
+		  </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" ng-hide="verificationCodeSent" ng-click="sendVerificationCode(MyForm)">Send Verification Code</button>
+          <button class="btn btn-primary" ng-hide="verificationCodeSent" ng-click="switchElement()">Have a Code</button>
+          <button class="btn btn-primary" ng-show="verificationCodeSent" ng-click="confirmVerificationCode(MyForm)">Confirm</button>
+          <button class="btn btn-warning" ng-click="closeModal()">Cancel</button>
+      </div>
+	</form>
+</div>

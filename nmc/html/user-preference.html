@@ -1,0 +1,35 @@
+<html ng-app="userPreference">
+<head>
+<title>Coalesce-Preference</title>
+</head>
+<body class="no_margin">
+<header>
+<div class="banner">
+<div class="logo floatLT"></div>
+<div class="floatRT" style="margin-right: 65px; margin-top: 30px;text-transform: uppercase;">Contact Us</div>
+</div>
+</header>
+<div ng-controller="userPrefenceController">
+	<button type="button" class="btn btn-primary"
+				 ng-click="updateList()" >Update</button>
+	<h3>Prefered List</h3>
+	<div ng-repeat="data in userPreferenceList.userPreferenceDTOList">
+		<span ng-if="data.isEnabled">{{data.preference.preferenceDisplayName}}</span>
+	</div>
+	
+	<h3>Remaining List</h3>
+	<div ng-repeat="data in userPreferenceList.userPreferenceDTOList">
+		<span ng-if="!data.isEnabled">{{data.preference.preferenceDisplayName}}</span>
+	</div>
+</div>
+<script type="text/javascript" src="../js/angular/angular.min.js"></script>
+<script type="text/javascript" src="../js/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.min.js"></script>
+<!-- App -->		
+<script type="text/javascript" src="../js/app/common/app.js"></script>
+<!-- Controllers - login and forgot password page -->
+<script type="text/javascript" src="../js/app/user-preference/controller.js"></script>
+<script type="text/javascript" src="../js/app/common/service/HTTPConnection.js"></script>
+<script type="text/javascript" src="../js/app/common/service/URL.js"></script>
+</body>
+</html>

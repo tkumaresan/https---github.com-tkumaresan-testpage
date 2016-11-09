@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="plunker">
+  <head>
+    <script src="../js/angular/angular.min.1.0.8.js"></script>
+    <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script type="text/javascript" src="../js/thirdParty/TinyMcEditor/tinymce.js"></script>
+    <script src="../js/Bootstrap/ui-bootstrap-tpls-0.4.0.js"></script>
+    <script src="../js/controllers/tinyMcController.js"></script>
+    <link href="../css/Bootstrap/bootstrap-combined.min.css" rel="stylesheet">
+  </head>
+  <body>
+  <h4>AngularUI - TinyMCE Implementation</h4>
+  <p><b>Pre-requesites:</b><p>
+  	<p>Plugins used:</p>
+	<ul>
+		<li><a href="../js/angular/angular.min.1.0.8.js">angular.min.1.0.8.js</a></li>
+		<li><a href="../js/thirdParty/TinyMcEditor/tinymce.js">tinymce.js</a></li>
+		<li><a href="//tinymce.cachefly.net/4.0/tinymce.min.js">tinymce.min.js</a></li>
+		<li><a href="../js/Bootstrap/ui-bootstrap-tpls-0.4.0.js">ui-bootstrap-tpls-0.4.0.js</a></li>
+	</ul>
+  <p>CSS Used:</p>
+ 	 <ul>
+  		<li><a href="../css/Bootstrap/bootstrap-combined.min.css">bootstrap-combined.min.css</a></li>
+  	 </ul>
+  <p>Customized js:</p>
+  	<ul><li><a href="../js/controllers/tinyMcController.js">tinyMcController.js</a></li></ul>
+  <p><b>Note:</b></p> 
+  	<ul>
+  	<li>This <a href="//tinymce.cachefly.net/4.0/tinymce.min.js">tiny.min.js</a> has the reference of its own css and images in it, so it can be directly referenced from its original location rather pointing locally.</li>
+  	<li>This plugin implementation is supported by older version of angular script files</li>
+  	<li>The script files should be loaded with the same order mentioned above</li>
+  	</ul>
+ 	<h4>Demo using TinyMCE with Angular </h4>
+	<div ng-controller="TabsDemoCtrl">
+	    <form name="campaignForm" class="form-horizontal" novalidate >     
+	          <textarea data-ui-tinymce data-ng-model="modal.one"></textarea>
+	    </form>
+	</div>
+  </body>
+</html>

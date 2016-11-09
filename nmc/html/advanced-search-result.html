@@ -1,0 +1,137 @@
+<div class="cls_wrapper" ng-controller="SearchResult">
+       <div ><!--search_filter-->
+		<div class="check_all find-deal-panel" scroll ng-class="{'fixed' : scrolled}">
+               	<div class="selectall">
+                   	<table width="100%" class="table-condensed table-responsive">
+                       	<tr>
+                           	<td class="col-md-3">
+                           		<div class="btn-group" dropdown>
+									<button type="button"
+										class="btn primary-button dropdown-toggle" dropdown-toggle>
+										{{companyDropDownTxt}} <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu primary-dropdown scrollable-menu" role="menu">
+										<li ng-repeat="field in fields">
+											<a ng-show="field.canShow == undefined || field.canShow == true"
+												href="" ng-click="selectedCompany(field)">{{field.displayName}}</a>
+										</li>
+									</ul>
+								</div>
+                           	</td>
+                               <td class="col-md-2">
+                               	<div class="btn-group" dropdown>
+									<button type="button"
+										class="btn primary-button dropdown-toggle" dropdown-toggle>
+										{{operatorDropDownTxt}} <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu primary-dropdown scrollable-menu" role="menu">
+										<li ng-repeat="operator in selectedField.searchFieldType.searchFieldTypeSearchOperators">
+											<a href="" ng-click="selectOperator(operator)">
+											{{operator.searchOperator.operator}}</a>
+										</li>
+									</ul>
+								</div>
+                               </td>
+                               <td class="col-md-3">
+                               	<span ng-show="selectedField.searchFieldType.type == 'text' || selectedField.searchFieldType.type == 'number'">
+								<input
+										type={{inputValueType}} class="form-control primary-text"
+										name="value" style="width: 200px;" ng-model="value"/>
+								</span>
+								<span ng-if="selectedField.searchFieldType.type == 'date'">
+								<p  class="input-group" >
+									<input type="text" style="border-radius:0px" class="form-control primary-text"
+											datepicker-popup="{{format}}" ng-model="valueDate" is-open="$parent.opened"
+											min-date="minDate" max-date="maxDate" 
+											datepicker-options="dateOptions" ng-required="true"
+											show-button-bar="false"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn primary-button"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</p>
+								</span>
+                               </td>
+                               <td class="col-md-3">
+                                <div class="pull-left slider-overall">
+									<div>
+										<div class="slider" ui-slider="slider.options" min="1"
+											max="3" step="1" ng-model="importance"></div>
+									</div>
+								</div>
+								<div class="pull-left" style="font-size: 10px; margin-top: 5px;margin-left: 10px;">
+									<span class="pull-left"  style="margin-left: -12px;">Low</span>
+									<span class="pull-left" style="margin: 0px 55px;">Medium</span>
+											<span class="pull-left">High</span>
+								</div>
+                               </td>
+                               <td class="col-md-1">
+                               	<a class="t-margin link add-link fa fa-plus" title="Add" href
+								ng-class="{disable:filterForm.value.$invalid}"
+								ng-click="addFilter()"></a>
+                               </td>
+                           </tr>
+							<tr ng-repeat="filter in availableFilters">
+								<td class="col-md-3">{{filter.field}}</td>
+								<td class="col-md-2">{{filter.operator}}</td>
+								<td class="col-md-3">{{filter.value}}</td>
+								<td class="col-md-3">{{filter.importance}}</td>
+								<td class="col-md-1"><a href ng-click="removeFilter(filter.field)" title="Remove"><span class="fa fa-times" style="color: red;"></span></a></td>
+							</tr>
+                       </table>
+                   </div>
+                   <div class="clearfix"></div>
+			</div>
+		<div ng-hide="errorMessage == undefined || errorMessage == null || errorMessage == ''" class="col-md-12 alert alert-danger"
+			role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span> {{errorMessage}}
+		</div>
+       </div>
+		<table class="border-spacing">
+			<tr ng-show="displayResult && !showAjaxLoader" class="result-row-wrapper"  ng-repeat="dataResult in data" style="margin-bottom:10px !important;">
+				<td ng-hide="result.hide" class="col-half company-widget" ng-repeat="result in dataResult">
+			           	<div class="top_main">
+				               <img height="40px" width="40px" ng-src="{{result.li_local_logo_url ? ('../images/deals-logo/' + result.li_local_logo_url)  : (result.li_logo_url ? result.li_logo_url : '../images/logo-not-available.png')}}" alt="Logo-Image">
+			                   <div class="topmain_right">
+			                   <h2><a ng-href="#/company-profile-summary?companyId={{result.id}}"	target="profile_blank"> {{result.name}}</a></h2>
+			                       <span class="close_ico pull-right"><a href  ng-click="dataResult.splice($index,1)" class="fa fa-times"></a></span>
+			                       <div class="col-lg-1 pull-right">
+			                       	<i ng-if="result.score > 0.7" class="green_signal fa fa-signal" title="High"></i>
+			                       	<i ng-if="result.score > 0.4 && result.score < 0.7" class="orange_signal fa fa-signal" title="Medium"></i>
+			                       	<i ng-if="result.score < 0.4" class="red_signal fa fa-signal" title="Low"></i>
+			                       </div>
+			                       <span class="pull-right" ng-if="result.sf_billing_city_state"><i class="location_area"></i>{{result.sf_billing_city_state}}</span>
+			                   </div>
+			               </div>
+		           	   <table>
+							<tr>
+								<td width="100">Employees</td>
+								<td width="100">{{result.li_emp_count}}</td>
+								<td width="120">Follow Up Date</td>
+								<td width="140">{{result.sf_follow_up_date}}</td>
+							</tr>
+							<tr>
+								<td width="100">Last Call</td>
+								<td width="100">{{result.sf_last_activity_date}}</td>
+								<td width="120">Interest Level</td>
+								<td width="140">{{result.sf_interest_level}}</td>
+							</tr>
+							<tr>
+								<td width="100">Investment Summary</td>
+								<td width="360" colspan=3>{{result.sf_investment_summary}}</td>
+							</tr>
+						</table>
+			        </td>
+			</tr>
+		</table>
+	<div class="clear"></div>
+</div>
+<div class="back-to-top" scroll ng-show="scrolled">
+	<a href ng-click="toTop()"><span
+		class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></a>
+</div>
+<div  class="footer_main">
+</div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="gridApp">
+<head>
+<meta charset="ISO-8859-1">
+	<title>Angular UI Grid</title>
+<script type="text/javascript" src="../../js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../js/angular/angular.min.js"></script>
+<script type="text/javascript" src="../../js/thirdparty/Angular-Grid/ng-grid.min.js"></script>
+<script type="text/javascript" src="../../js/sample/angularGridController.js"></script>
+<link rel="stylesheet" href="../../css/angular/ng-grid.min.css"/>
+<link rel="stylesheet" href="../../css/jquery/jquery-ui.min.css"/>
+<style>
+	.gridStyle {
+	border: 1px solid rgb(212,212,212);
+	width: 400px;
+	height: 200px;
+	}
+</style>
+</head>
+	<body  ng-controller="gridController">
+	<h4>Angular UI Grid</h4>
+	<p><b>Pre-requesites:</b></p>
+	<p>Plugins used:</p>
+	<ul>
+		<li><a href="../js/jquery/jquery.min.js">jquery.min.js</a></li>
+		<li><a href="../js/jquery/jquery-ui.min.js">jquery-ui.min.js</a></li>
+		<li><a href="../js/angular/angular.min.js">angular.min.js</a></li>
+		<li><a href="../js/thirdParty/Angular-Grid/ng-grid.min.js">ng-grid.min.js</a></li>
+	</ul>
+	<p>CSS Used:</p>
+	<ul>
+		<li><a href="../css/angular/ng-grid.min.css">ng-grid.min.css</a></li>
+	</ul>
+	<p>Customized js:</p>
+	<ul>
+		<li><a href="../js/controllers/angularGridController.js">angularGridController.js</a></li>
+	</ul>
+	<h1>Demo on Angular UI Grid</h1>
+			<div class="gridStyle" ng-grid="gridOptions"></div>	
+			<div class="selectedItems">
+				<div>{{mySelections[0].name}} , {{mySelections[0].age}}</div>
+			</div>
+	</body>
+</html>

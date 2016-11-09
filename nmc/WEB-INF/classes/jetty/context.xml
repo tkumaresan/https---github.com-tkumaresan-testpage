@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <Set name="contextPath">/</Set>
+    <Set name="extraClasspath">src/main/resources/jetty</Set>
+    <Set name="defaultsDescriptor">src/main/resources/jetty/webdefault.xml</Set>
+    
+<!--     <New id="trackerMySqlDS" class="org.eclipse.jetty.plus.jndi.Resource"> -->
+<!--         <Arg></Arg> -->
+<!--         <Arg>jdbc/paylinkHsqlDS</Arg> -->
+<!--         <Arg> -->
+<!--             <New class="com.jolbox.bonecp.BoneCPDataSource"> -->
+<!--                 <Set name="driverClass"><SystemProperty name="database.driver"/></Set> -->
+<!--                 <Set name="jdbcUrl"><SystemProperty name="database.url"/></Set> -->
+<!--                 <Set name="username"><SystemProperty name="database.username"/></Set> -->
+<!--                 <Set name="password"><SystemProperty name="database.password"/></Set> -->
+<!--                 <Set name="minConnectionsPerPartition">5</Set> -->
+<!--                 <Set name="maxConnectionsPerPartition">50</Set> -->
+<!--                 <Set name="acquireIncrement">5</Set> -->
+<!--                 <Set name="idleConnectionTestPeriod">30</Set> -->
+<!--             </New> -->
+<!--         </Arg> -->
+<!--     </New> -->
+</Configure>

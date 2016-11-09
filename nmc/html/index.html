@@ -1,0 +1,32 @@
+<html ng-app="coalesceLogin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link href="../images/logo/coalesce_icon.ico" type="image/png"
+	rel="icon">
+<title>Coalesce-Index</title>
+<link rel="stylesheet" type="text/css" href="../css/login.css" />
+</head>
+<body class="no_margin">
+	<header>
+		<div class="banner">
+			<div class="logo floatLT"></div>
+			<div class="floatRT"
+				style="margin-right: 65px; margin-top: 12px; text-transform: uppercase;">Contact
+				Us</div>
+		</div>
+	</header>
+	<div ng-view class="pagetitle"></div>
+	<footer>
+		<p class="footertext">&copy; 2015, Coalesce Inc. All rights
+			reserved.</p>
+	</footer>
+	<script type="text/javascript" src="../js/angular/angular.min.js"></script>
+	<script type="text/javascript" src="../js/angular/angular-route.min.js"></script>
+	<!-- App -->
+	<script type="text/javascript" src="../js/app/common/app.js"></script>
+	<!-- Controllers - login and forgot password page -->
+	<script type="text/javascript" src="../js/app/login/controller.js"></script>
+</body>
+</html>

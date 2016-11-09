@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html ng-app='chartsApp'>
+<script type="text/javascript" src="../js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/angular/angular.min.js"></script>
+<script type="text/javascript" src="../js/thirdParty/highCharts/highstock.src.min.js"></script>
+<script type="text/javascript" src="../js/thirdParty/highCharts/highcharts-ng.min.js"></script>
+<script type="text/javascript" src="../js/thirdParty/highCharts/exporting.min.js"></script>
+<script type="text/javascript" src="../js/controllers/highChartsController.js"></script>
+<title>Angular Highcharts</title>
+<body ng-controller="dataController">
+	<h1>Demo on Angular Highcharts</h1>
+	<h2>Highcharts-ng example</h2>
+	<div class="row">
+		<div class="span9">
+			<div class="row">
+				<highchart id="chart1" config="chartConfig" class="span9"></highchart>
+			</div>
+		</div>
+		Title : <input type="text" ng-model="chartConfig.title.text" /> <br/>
+		Subtitle : <input type="text" ng-model="chartConfig.subtitle.text" />
+		<div>
+			<label for="grapId">Select your chart type</label> 
+			<select	id="graphId" ng-model="chartConfig.options.chart.type"
+				ng-options="c.id as c.type for c in chartData"></select> 
+			<div>Your have selected {{chartConfig.options.chart.type}} chart</div>
+		</div>
+	</div>
+	<p>
+		<b>Input details to the charts:</b>
+	</p>
+	<ul>
+		<li>It accepts a json object as input with the following structure :</li>
+		<li>The title should be a string which will be display as the Title of the Chart.</li>
+		<li>The subtitle should be a string which will be display as the Sub - Title of the Chart.</li>
+		<li>The type should be a string (mostly	'bar','pie','line',etc.,). Please refer the link <a href="http://www.highcharts.com/docs/chart-and-series-types/chart-types"> chart types</a> for more info.</li>
+		<li>The chartSeries should be an array of json objects where the json object have the following </li>
+			<li style="margin-left:15px"> The name should be a string.</li>
+			<li style="margin-left:15px"> The data should be an array of integers</li>
+			<li style="margin-left:15px">Ex: "chartSeries": [ {
+					"name" : "Greg",
+					"data" : [ 1,2,4 ]
+				}, {
+					"name" : "Wolf",
+					"data" : [ 3,5,6],
+				}, {
+					"name" : "Steve",
+					"data" : [ 4,6,6 ]
+				}],</li>
+		<li>The exportFeature should be a boolean where it will switch on / off the exporting feature.</li>
+	</ul>
+	<h4>Angular Highcharts implementation</h4>
+	<table>
+		<tr>
+			<th>Plugins used:</th>
+		</tr>
+		<tbody>
+			<tr>
+				<td><a href="../js/jquery/jquery.min.js">jquery.min.js</a></td>
+			<tr>
+			<tr>
+				<td><a href="../js/jquery/jquery-ui.min.js">jquery-ui.min.js</a></td>
+			</tr>
+			<tr>
+				<td><a href="../js/angular/angular.min.js">angular.min.js</a></td>
+			</tr>
+			<tr>
+				<td><a href="../js/thirdParty/highCharts/highstock.src.min.js">highstock.src.min.js</a></td>
+			</tr>
+			<tr>
+				<td><a href="../js/thirdParty/highCharts/highcharts-ng.min.js">highcharts-ng.min.js</a></td>
+			</tr>
+			<tr>
+				<td><a href="../js/thirdParty/highCharts/exporting.min.js">exporting.min.js</a></td>
+			</tr>
+			<tr>
+				<td><a href="../css/angular/ngDialog.css">ngDialog.css</a></td>
+			</tr>
+			<tr>
+				<td><a href="../css/angular/ngDialog-theme-default.css">ngDialog-theme-default.css</a></td>
+			</tr>
+			<tr>
+				<td><a href="../css/angular/ngDialog-theme-plain.css">ngDialog-theme-plain.css</a></td>
+			</tr>
+		</tbody>
+		<tr>
+
+		</tr>
+		<tr>
+			<td><a href="../js/controllers/highChartsController.js">highChartsController.js</a></td>
+		</tr>
+	</table>
+	<p>
+		<b>Note:</b>
+	</p>
+	<ul>
+		<li>The script files should be loaded with the same order
+			mentioned above</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="dialogApp">
+<link rel="stylesheet" href="../css/angular/ngDialog.css" />
+<link rel="stylesheet" href="../css/angular/ngDialog-theme-default.css" />
+<link rel="stylesheet" href="../css/angular/ngDialog-theme-plain.css" />
+<script src="../js/angular/angular.min.js" type="text/javascript"></script>
+<script src="../js/thirdParty/dialogs/ngDialog.min.js"
+	type="text/javascript"></script>
+<script src="../js/controllers/dialogController.js"
+	type="text/javascript"></script>
+<title>Angular dialog implementation</title>
+<style>
+a,button,div,h1 {
+	font: 14px 'Helvetica Neue', 'Helvetica',Source Sans Pro;
+	display: block;
+	color: #333;
+	margin-bottom: 10px;
+}
+.ngdialog-message h3{
+	background: grey;
+	font-weight: bold;
+	padding: 1rem 2.25rem 0.5rem;
+	padding: 0.5rem
+}
+.dialog-padding {
+	padding: 1rem;
+}
+</style>
+
+<body>
+	<h4>Angular dialog implementation</h4>
+	<p>
+		<b>Pre-requesites:</b>
+	</p>
+	<p>Plugins used:</p>
+	<ul>
+		<li><a href="../js/angular/angular.min.js">angular.min.js</a></li>
+		<li><a href="../js/thirdParty/dialogs/ngDialog.min.js">ngDialog.min.js</a></li>
+	</ul>
+	<p>CSS Used:</p>
+	<ul>
+		<li><a href="../css/angular/ngDialog.css">ngDialog.css</a></li>
+		<li><a href="../css/angular/ngDialog-theme-default.css">ngDialog-theme-default.css</a></li>
+		<li><a href="../css/angular/ngDialog-theme-plain.css">ngDialog-theme-plain.css</a></li>
+	</ul>
+	<p>Customized js:</p>
+	<ul>
+		<li><a href="../js/controllers/dialogController.js">dialogController.js</a></li>
+	</ul>
+	<h1>Demo on Angular dialog</h1>
+	<div ng-controller="dialogController">
+		<button ng-click="openDialog()">Click here to open a simple
+			dialog</button>
+		<button type="button" ng-dialog="firstDialogId"
+			ng-dialog-controller="dialogController" ng-dialog-data="{{jsonData}}"
+			ng-dialog-class="ngdialog-theme-default" ng-dialog-scope="this"
+			ng-dialog-show-close="false">Open via directive</button>
+
+		<button ng-click="openConfirm()">Open confirm modal</button>
+		<button ng-click="openTimed()">Open and use return value to close later</button>
+	</div>
+</body>
+<script type="text/ng-template" id='sampleId'>
+	<div class="ngdialog-message">
+			<h3>{{sampleSubject}}</h3>
+			<div class="ngdialog-content">
+				<p>{{description}}</p>
+				<p>{{confirmClose}}</p>
+				<p>{{dialogInformation}} <a href="http://ngmodules.org/modules/ngDialog" target="winExtAdmin"> click here </a></p>
+			</div>
+	</div>
+</script>
+<script type="text/ng-template" id="modalDialogId">
+		<div class="ngdialog-message">
+			<h3>ngDialog modal example</h3>
+			<p>The <code>.openConfirm()</code> function returns a promise that is resolved when confirmed and rejected when otherwise closed. Modal dialogs by default do not close when clicked outside the dialog or when hitting escape. This can ofcourse be overridden when opening the dialog.</p>
+			<p>Confirm can take a value. Enter one here for example and see the console output: <input ng-model="confirmValue" /></p>
+		</div>
+		<div class="ngdialog-buttons">
+			<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(confirmValue)">Confirm</button>
+			<button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">Cancel</button>
+		</div>
+	</script>
+<script type="text/ng-template" id='firstDialogId'>
+	<div class="ngdialog-message">
+			<h3>ngDialog template</h3>
+			<p ng-show="theme">Test content for <code>{{theme}}</code></p>
+			<p ng-show="ngDialogData.foo">Data passed through directive: <code>{{ngDialogData.foo}}</code></p>
+			<p ng-show="dialogModel.message">Scope passed through directive: <code>{{dialogModel.message}}</code></p>
+		</div>
+		<div class="ngdialog-buttons">
+			<button type="button" class="ngdialog-button ngdialog-button-secondary"
+				ng-dialog="secondDialogId"
+				ng-dialog-class="ngdialog-theme-default"
+				ng-dialog-controller="SecondModalCtrl"
+				ng-dialog-close-previous>Close and open</button>
+			<button type="button" class="ngdialog-button ngdialog-button-primary " ng-click="openSecond()">Open next</button>
+		</div>
+</script>
+<script type="text/ng-template" id="secondDialogId">
+		<h3><a href="" class="dialog-padding" ng-click="closeSecond()">Close all by click here!</a></h3>
+	</script>
+</html>

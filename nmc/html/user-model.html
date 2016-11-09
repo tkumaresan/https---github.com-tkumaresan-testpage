@@ -1,0 +1,214 @@
+<div class="cls_wrapper" ng-controller="userModelController" id="user-model"><div growl></div>
+<div class="page_title">
+	<h1>{{modelSelectedName}}</h1>
+	<ul class="function_list">
+    	<li><a title="Add"  ng-class="{model_create: true, active_btn: modelSelected[0].selected}"href="" ng-click="changeModelSelected(0)"></a></li>
+        <li><a title="Validate"  ng-class="{model_update: true, active_btn: modelSelected[1].selected}" href="" ng-click="changeModelSelected(1)"></a></li>
+        <li><a title="Update"  ng-class="{model_refresh: true, active_btn: modelSelected[2].selected}" href="" ng-click="changeModelSelected(2)"></a></li>
+        <li><a title="Delete"  ng-class="{model_close: true, active_btn: modelSelected[3].selected}" href="" ng-click="changeModelSelected(3)"></a></li>
+    
+    </ul>
+  </div>
+       <div class="search_filter no-margin" ng-show="!modelSelected[0].selected"><!--search_filter-->
+		<div class="no_rows" ng-show="modelSelected[1].selected">
+			<label>No.of rows</label> <input type="number"
+				ng-model="validateRowCount.rowCount">
+		</div>
+		<div class="model_selection">
+            	<label>Select a Model</label>
+               <div class="btn-group" dropdown>
+					<button type="button" class="btn btn-info dropdown-toggle"
+						dropdown-toggle>
+						{{modelDropDownText}} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li ng-repeat="model in modelNameList"><a href=""
+							ng-click="selectedModel(model, false)">{{model.name}}</a></li>
+					</ul>
+				</div>
+           </div>
+        	
+        </div><!--search_filter end-->
+        <div class="search_filter no-margin margin-top-small" ng-show="!modelSelected[3].selected"><!--search_filter-->
+             <a href="" ng-model="collapsed" ng-click="collapsed=!collapsed">
+            	<i id="open_id" ng-class="{'fa fa-lg':true, 'fa-angle-up': !collapsed, 'fa-angle-down': collapsed}"></i>
+            </a>
+            
+            <h1>{{criteriaName}}</h1>
+            
+        	<div class="box-open" ng-show="!collapsed">
+            	<div class="check_all padding-no-btm">
+                	
+                    <div class="clearfix"></div>
+                	<div class="form_createmodel" ng-show="modelSelected[0].selected"><!--form_createmodel start-->
+                    	<form>
+                        	<div class="frm_row padding-no-btm no-margin">
+                            	<div class="frm_name">
+                                	<label>Name</label>
+                                    <input type="text" value="" ng-model="modelName">
+                                </div>
+                                <div class="no_rows">
+                                	<label>No.of rows</label>
+                                    <input type="number" ng-model="rowCount">
+                                </div>
+                                <div class="source">
+                                	<label>Source</label>
+       								<div class="btn-group" dropdown>
+										<button type="button" class="btn btn-info dropdown-toggle"
+											dropdown-toggle>
+											{{selectedSourceName}} <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li ng-repeat="source in sourceListName"><a href=""
+												ng-click="selectedSource(source)">{{source.name}}</a></li>
+										</ul>
+									</div>
+                                </div>
+                                <div class="include_keyword">
+                                	<label>Include Keywords</label>
+                                    <input type="text" value="" ng-model="includeKeywords">
+                                </div>
+                            	<div class="include_keyword">
+                                	<label>Exclude Keywords</label>
+                                    <input type="text" value="" ng-model="excludeKeywords">
+                                </div>
+                                <div class="clearfix">
+                                <button type="button" class="btn btn-primary pull-right" ng-click="configureSearch()"
+                                 ng-if="modelSelected[0].selected">Search</button>
+                                </div>
+                            </div>
+                        
+                        </form>
+                    </div><!--form_createmodel end-->
+                    <div class="form_createmodel" ng-show="modelSelected[1].selected || modelSelected[2].selected"><!--form_createmodel start-->
+                    	<form>
+                        	<div class="frm_row padding-no-btm no-margin">
+                            	<div class="frm_name">
+                                	<label>Name</label>
+                                    <input type="text" value="" ng-model="selectedModelDetails.name" readonly>
+                                </div>
+                                <div class="no_rows" ng-if="modelSelected[2].selected">
+                                	<label>No.of rows</label>
+                                    <input type="number" ng-model="selectedModelRowCount" readonly>
+                                </div>
+                                <div class="source" ng-class="{'pull-left':modelSelected[1].selected}">
+                                	<label>Source</label>
+                                	 <input type="text" ng-model="selectedModelDetails.source.name" readonly>
+                                </div>
+                                <div class="include_keyword">
+                                	<label>Include Keywords</label>
+                                    <input type="text" value="" ng-model="selectedModelDetails.keywordsInclude" readonly>
+                                </div>
+                            	<div class="include_keyword">
+                                	<label>Exclude Keywords</label>
+                                    <input type="text" value="" ng-model="selectedModelDetails.keywordsExclude" readonly>
+                                </div>
+                                <div class="clearfix">
+                                <button type="button" class="btn btn-primary pull-right" ng-click="configureSearch()"
+                                 ng-if="modelSelected[0].selected">Search</button>
+                                </div>
+                            </div>
+                        
+                        </form>
+                    </div><!--form_createmodel end-->
+				</div>
+            </div>
+        </div><!--search_filter end-->
+        <!-- Create model result data starts -->
+        <div class="search_filter no-margin margin-top-small" ng-show="modelSelected[0].selected"
+         ng-repeat="company in configureSearchList.model.modelParagraphs"><!--search_filter-->
+            <a href="" ng-model="showDetails" ng-click="showDetails=!showDetails">
+            	<i id="open_id" ng-class="{'fa fa-lg':true, 'fa-angle-up': !showDetails, 'fa-angle-down': showDetails}"></i>
+            </a>
+            <h1>{{company.companyName}}</h1>
+			<div ng-show="!showDetails">
+	            <div class="btn-group pull-right">
+					<div class="disable_btn"
+						ng-click="mayBeOptionClicked(company.solrId)" style="float:right;"></div>
+					<div ng-class="{'yes-image':company.flag == 'YES','no-image':company.flag == 'NO','yes-image less-opacity':company.flag == 'MAY_BE_LATER'}" 
+						ng-click="yesNoOptionClicked(company.solrId)" style="float:right;"></div>
+				</div>
+	        	<div class="box-open">
+	            	<div class="check_all">
+	                	
+	                    <div class="clearfix"></div>
+	                	<div class="form_createmodel"><!--form_createmodel start-->
+	                    	<p>{{company.paragraph}}</p>
+	                    </div><!--form_createmodel end-->
+					</div>
+	            </div>
+            </div>
+        </div>
+         <!-- Create model result data ends -->
+         
+          <!-- Validate model and update model result data starts -->
+         <div class="search_filter no-margin margin-top-small" ng-show="modelSelected[1].selected || modelSelected[2].selected"
+         	 ng-repeat="company in selectedModelDetails.modelParagraphs">
+        	 <a href="" ng-model="showDetails" ng-click="showDetails=!showDetails">
+            	<i id="open_id" ng-class="{'fa fa-lg':true, 'fa-angle-up': !showDetails, 'fa-angle-down': showDetails}"></i>
+            </a>
+            <h1>{{company.companyName}}</h1>
+            <div ng-show="!showDetails">
+	            <div class="btn-group pull-right">
+					<div class="disable_btn pull-right"
+						ng-click="mayBeOptionClicked(company.solrId)"></div>
+					<div ng-class="{'yes-image':company.flag == 'YES','no-image':company.flag == 'NO','yes-image less-opacity':company.flag == 'MAY_BE_LATER'}" 
+						ng-click="yesNoOptionClicked(company.solrId)" style="float:right;"></div>
+				</div>
+	            <span class="score_value">Score:{{company.score | number : 2}}</span>
+	            
+	        	<div class="box-open">
+	            	<div class="check_all">
+	                	
+	                    <div class="clearfix"></div>
+	                	<div class="form_createmodel"><!--form_createmodel start-->
+	                    	<p>{{company.paragraph}}</p>
+	                    </div><!--form_createmodel end-->
+					</div>
+	            </div>
+            </div>
+        </div>
+        <!-- Validate model and update model result data ends -->
+        
+        
+      <button class="btn btn-primary pull-right margin-top-small" ng-if="modelSelected[0].selected && showCreateModelButton"
+      		  ng-click="createModel()">Create Model</button>
+      <button class="btn btn-primary pull-right margin-top-small" ng-if="modelSelected[1].selected && showValidateSaveBtn"
+      		  ng-click="saveUpdatedModel()">Save Model</button>
+      <button class="btn btn-primary pull-right margin-top-small" ng-if="modelSelected[2].selected && showSaveModelButton"
+      		  ng-click="saveUpdatedModel()">Update Model</button>
+      <button class="btn btn-primary pull-right margin-top-small" ng-if="modelSelected[3].selected && showdeleteModelButton"
+      		   data-toggle="modal" data-target="#myModal">Delete Model</button>
+      
+     <!-- Delete confirmation dialog box -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		
+		<div class="modal-dialog" role="document">
+			<div class="modal-header">
+	      	  <button type="button" ng-click="closeModal()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	          <h3 class="modal-title"><i class="fa fa-trash-o"></i> Delete Model
+	          </h3>
+	      </div>
+			<div class="modal-content">
+				<div class="modal-body">Do you want to delete it?</div>
+				<div class="modal-footer" style="border-top: none">
+					<button type="button" class="btn btn-primary"
+						ng-click="deleteModel()" data-dismiss="modal">Yes</button>
+					<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+
+
+
+
+</script>

@@ -1,0 +1,38 @@
+body {
+font-family:'Open Sans', sans-serif;font-weight:normal;height: 100%;width: 100%;margin: 0px auto;background:url(../images/home-bg.jpg) no-repeat;background-size: 100% 100%;background-attachment: fixed;}
+.coalese{width: 1024px;height: 480px;position: relative;top:0;bottom: 0;left: 0;right: 0;margin: auto;}
+.coalese-wrapper{margin-top:100px}
+.cls_header{float:none;position: relative;}
+.arrow{display:inline-block;position:absolute}
+.arrow span{position: absolute;white-space: nowrap;color: #fff;font-size: 30px;}
+.arrow span.top{top: 20px;}
+.arrow span.bottom{bottom: 20px;}
+.arrow.arrow01 span.top{left: -35px;}
+.arrow.arrow02 span.top{left: 77px;}
+.arrow.arrow03 span.bottom{left: -20px;}
+.arrow.arrow04 span.bottom{left: 77px;}
+.arrow.arrow04 span.bottomLeft{left: 100px!important;}
+.arrow01{ background: url("../images/01-arrow.png") no-repeat;height: 203px;left: 10px;top: -12px;width: 148px;}
+.arrow02{background:url("../images/02-arrow.png") no-repeat;height: 190px;left: 247px;top: 1px;width: 171px;}
+.arrow03{background:url("../images/03-arrow.png") no-repeat;bottom: 32px;height: 165px;left: 16px;width: 140px;}
+.arrow04{background:url("../images/04-arrow.png") no-repeat;bottom: -3px;height: 188px;left: 238px;width: 147px;}
+.arrow01.arrowhover{background:url("../images/01-arrow-hover.png") no-repeat;}
+.arrow02.arrowhover{background:url("../images/02-arrow-hover.png") no-repeat;}
+.arrow03.arrowhover{background:url("../images/03-arrow-hover.png") no-repeat;}
+.arrow04.arrowhover{background:url("../images/04-arrow-hover.png") no-repeat;}
+.ibm{float: right;margin-right: -75px;}
+
+@media (min-width: 765px) and (max-width: 1023px) {
+	.coalese-wrapper img{max-width:750px}
+	.arrow,.arrowhover{background-size:80% !important}
+	.arrow span.bottom{bottom:50px}
+	.arrow span{font-size:20px}
+	.arrow.arrow03 span.bottom{left:-8px}
+	.arrow03{bottom:46px}
+	.arrow04{bottom:20px;left:187px}
+	.arrow01{top:23px}
+	.arrow02{left:195px; top:35px}
+	.arrow.arrow01 span.top{left:13px}
+	.arrow span.top{top:17px}
+	.coalese{left:5px}
+	}

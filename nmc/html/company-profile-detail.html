@@ -1,0 +1,36 @@
+<div class="cls_wrapper" ng-controller="CompanyProfileDetail">
+		<form ng-submit="loadAnswers();" >
+			<div class="enter_question floatingPanel floatingPanelPadding">
+	       		 <input placeholder="Enter your question..." ng-model="question" type="text"  id="inputSuccess4" class="form-control">
+	       			<a title="Click to Find" href="" ng-click="loadAnswers();" class="main-search-icon-holder">
+						<span class="glyphicon" ng-class="{' glyphicon-search main-search-icon':!loadingResults, 'fa fa-refresh fa-spin fa-2x':loadingResults}"></span>
+						<!-- <span class="glyphicon glyphicon-search main-search-icon"></span> -->
+					</a>
+	        </div>
+        </form>
+		<div class="main_askwatson" ng-show="!noResult"><!--main_askwatson start-->
+        	<div class="watson_title" scroll ng-class="{fixedPosition: scrolled}">
+            	<h1 style="width: 31%;">Topics</h1>
+                <h1 style="width: 58%;">Content</h1>
+                <h1>Confidence</h1>
+                <div class="clearFix"></div>
+            </div>
+            <div class="askwatson_cont" ng-repeat="answer in answers"><!--askwatson_cont start-->
+            	<div class="topic_name">
+                	<more-less hmtext="{{answer.topic}}" hmlimit="50"></more-less>
+                </div>
+                <div class="cont_desc">
+                	<more-less hmtext="{{answer.description}}" hmlimit="100"></more-less>
+                </div>
+                <div class="confidence_level">
+                	<i ng-class="{veryhigh_signal:answer.confidence=='Very High', high_signal:answer.confidence=='High', weak_signal:answer.confidence=='Low'}"></i>
+					<span>{{answer.confidence}}</span>
+                </div>
+            </div><!--askwatson_cont end-->
+        </div><!--main_askwatson end-->
+<div class="clear"></div>
+</div>
+<div class="back-to-top" scroll ng-show="scrolled">
+	<a href ng-click="toTop()"><span
+		class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></a>
+</div>

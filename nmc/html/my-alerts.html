@@ -1,0 +1,270 @@
+<div class="cls_wrapper" ng-controller="myalert">
+	<h1>Alerts</h1>
+	<div class="row myalert-filter-fixed">
+		<div class="col-md-2 ">
+			<div class="btn-group" dropdown>
+				<button type="button" class="btn dropdown-toggle transparent-button"
+					dropdown-toggle>
+					--Show All Deals-- <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu transparent-dropdown" role="menu">
+					<li><a href ng-click="filter('all')">All</a></li>
+					<li><a href ng-click="filter('salesforce')">Sales Force</a></li>
+					<li><a href ng-click="filter('fav')">Favorites </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<p class="input-group" style="margin:0!important;">
+			  <ui-select on-select="loadCompanyInfo($item, $model)" ng-model="selectedCompany" theme="selectize" ng-disabled="disabled" style="width: 250px;">
+			    <ui-select-match placeholder="Search ">{{$select.selected.companyName}}</ui-select-match>
+			    <ui-select-choices  repeat="company in companyList | filter: {companyName: $select.search}">
+			      <span ng-bind-html="trustAsHtml((company.companyName | highlight: $select.search))"></span>
+			    </ui-select-choices>
+			  </ui-select>
+			</p>
+		</div>
+		<div class="col-md-3 frm_date" style="width:20%!important">
+			<p class="input-group" style="display: block;">
+				<input type="text" class="form-control" style="border-radius:0px"
+					datepicker-popup="{{format}}" ng-model="fromDate"
+					is-open="isFromOpened" min-date="minDate" max-date="maxDate"
+					datepicker-options="dateOptions" ng-required="true"
+					show-button-bar="false" ng-change="search(1)" disabled/> <span class="input-group-btn">
+					<button type="button" class="btn btn-default transparent-button"
+						ng-click="open($event, 'from')">
+						<i class="fa fa-calendar"></i>
+					</button>
+				</span>
+			</p>
+		</div>
+		<div class="col-md-3 to_date nopadding">
+			<p class="input-group" style="display: block;">
+				<input type="text" class="form-control" style="border-radius:0px"
+					datepicker-popup="{{format}}" ng-model="toDate"
+					is-open="isToOpened" min-date="minDate" max-date="maxDate"
+					datepicker-options="dateOptions" ng-required="true"
+					show-button-bar="false" ng-change="search(1)" disabled/> 
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default transparent-button"
+						ng-click="open($event, 'to')">
+						<i class="fa fa-calendar"></i>
+					</button>
+				</span>
+			</p>
+		</div>
+		<div>
+			<span ng-hide="loadingResults"> <a href ng-click="search(1)">
+					<span class="glyphicon glyphicon-search myalerts-search-icon"
+					aria-hidden="true"></span>
+			</a>
+			</span> <span ng-hide="!loadingResults"> <a href> <span style="position:relative;left: -65px;"
+					class="fa fa-refresh fa-spin fa-2x"
+					aria-hidden="true"></span>
+			</a>
+			</span>
+		</div>
+	</div>
+	<div ng-show="errorMessage" class="col-md-12 alert alert-danger"
+		style="margin-top: 20px;" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">Error:</span> {{errorMessage}}
+	</div>
+	<div infinite-scroll="search()" infinite-scroll-distance="2">
+		<div ng-hide="company.hide" class="col-lg-12 box"
+			ng-repeat="company in companies | orderBy:'index'">
+			<!--box strat-->
+			<div class="springbot_box">
+				<a href="{{appendProtocol(company.website)}}" target="company_web_blank" title="{{company.website}}">
+				<img
+					ng-src="{{company.companyLogo ? ('../images/deals-logo/' + company.companyLogo) : '../images/logo-not-available.png' }}"
+					title="{{company.website}}" />
+					</a>
+			</div>
+			<div class="pull-left" style="width:93%">
+				<div class="col-lg-12 box_top">
+					<a
+						ng-href="#/company-profile-summary?companyId={{company.companyId}}"
+						target="profile_blank"> {{company.companyName}}</a>
+					<div class="col-lg-5 location">
+						<i ng-show="company.location" class="location_ico margin_small_top"></i>
+						<p class="margin_small_top">{{company.location}}</p>
+						<p ng-if="company.salesforce" class="sourceImg margin_small_top">
+							<a ng-href = "https://na29.salesforce.com/{{company.salesforceAccountId}}" target="salesforce_blank">
+								<img class="salesforce"	ng-src="../images/logo/salesforce.png" title="Salesforce" />
+							</a>
+						</p>
+						<p ng-if="company.mattermark" class="sourceImg margin_small_top">
+							<a ng-href = "{{company.mattermarkUrl}}" target="mattermark_blank">
+								<img class="mattermark"	ng-src="../images/logo/mattermark.png" title="Mattermark" />
+							</a>
+						</p>
+						<p ng-if="company.linkedin" class="sourceImg margin_small_top">
+							<a ng-href = "https://www.linkedin.com/company/{{company.linkedinCompanyId}}" target="linkedin_blank">
+								<img class="linkedin"	ng-src="../images/logo/linkedin.png" title="Linkedin" />
+							</a>
+						</p>
+						<p ng-if="company.glassdoor" class="sourceImg margin_small_top">
+							<a ng-href = "http://www.glassdoor.com/Reviews/index.htm" target="glassdoor_blank">
+								<img class="glassdoor"	ng-src="../images/logo/glassdoor.png" title="Glassdoor" />
+							</a>
+						</p>
+						
+					</div>
+					<!-- <div multiple-images company="company"></div> -->
+					<div class="intrest pull-right">
+						<i class="icon_user"></i>
+						<p>
+							<span ng-if="company.owner">{{nullToEmpty(getInitials(company.owner))}}</span>
+							- {{company.interestLevel}}
+						</p>
+						<a title="{{ !company.favorite && 'Favourite' || 'Unfavourite' }}"
+							ng-class="{'active': company.favorite==true, 'rating':true}" href
+							ng-click="markAsFav(company.companyId,company.favorite)"></a> <a title="Remove"
+							ng-class="{'active': company.blocked==true, 'disable':true}" href
+							ng-click="markAsBlocked(company.companyId)"></a>
+					</div>
+				</div>
+				<div class="springbot_cntleft" style="width: 100%">
+					<div class="leftcnt_top">
+						<p ng-show="company.companyDescription" class="cs_truncate" title="{{company.companyDescription}}">{{company.companyDescription}}...</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12 box_middle result-row-wrapper">
+				<div class="lastraise" ng-show="company.revenue.revenue" style="width:164px">
+					<!--Last Raise-->
+					<div class="top_head">
+						<i class="revenue_icon"></i>
+						<h1>REVENUE</h1>
+						<span ng-show="company.revenue.revenueYear">({{company.revenue.revenueYear}})
+							</span>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<h2 title="{{company.revenue.revenueComment}}">${{company.revenue.revenue}}M</h2>
+						<div class="value_right" ng-show="company.revenue.difference">
+							<p>{{company.revenue.difference}}%&nbsp;<span>y/y</span></p>
+						</div>
+					</div>
+				</div>
+				<div class="employee" ng-show="company.employeeCount">
+					<!--employee-->
+					<div class="top_head">
+						<i class="emp_icon"></i>
+						<h1>EMPLOYEES</h1>
+						<span>({{convertToJSDate(company.employeeCountLastUpdated)
+							| date : "M-yy"}})</span>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<h2>{{company.employeeCount}}</h2>
+						<div class="value_right" ng-if="company.employeeUplift">
+							<p>
+								&nbsp;{{company.employeeUplift | number:1}}%&nbsp;<span>m/m</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<!--end-->
+				<div class="job_posting" ng-show="company.jobPosting">
+					<!--Job Posting-->
+					<div class="top_head">
+						<i class="jobpost_icon"></i>
+						<h1>JOB POSTINGS</h1>
+						<span>({{convertToJSDate(company.employeeCountLastUpdated)
+							| date : "M/yy"}})</span>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<h2>{{company.jobPosting}}</h2>
+						<div class="value_right" ng-if="company.jobPostingUplift">
+							<p>
+								&nbsp;{{company.jobPostingUplift}}%&nbsp;<span>m/m</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<!--end-->
+				<div class="lastraise" ng-show="company.totalFund">
+					<!--Last Raise-->
+					<div class="top_head">
+						<i class="raise_icon"></i>
+						<h1>LAST RAISE</h1>
+						<span ng-show="company.lastRaise">${{toMillion(company.lastRaise)}}M
+							({{company.lastRaiseDate}})</span>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<h2>${{toMillion(company.totalFund)}}M</h2>
+						<div class="value_right" ng-if="company.totalFund">
+							<span class="tot">Total</span>
+						</div>
+					</div>
+				</div>
+				<!--end-->
+				<div class="lastcall" ng-show="company.lastCall">
+					<!--Last call-->
+					<div class="top_head">
+						<i class="lastcall_icon"></i>
+						<h1>LAST CALL/MTG</h1>
+						<span ng-show="company.lastCommentDate">({{company.lastCommentDate}})
+							<span ng-show="company.participants">- {{nullToEmpty(getInitials(company.participants))}}</span></span>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<div class="lastcall_cnt">
+							<span class="tot">{{company.lastCall}}</span>
+						</div>
+					</div>
+				</div>
+				<!--end-->
+				<div class="lasttouch" ng-show="company.lastTouch">
+					<!--Last touch-->
+					<div class="top_head">
+						<i class="lasttouch_icon"></i>
+						<h1>LAST TOUCH</h1>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<div class="lastcall_cnt">
+							<span class="tot">{{company.lastTouch}}</span>
+						</div>
+					</div>
+				</div>
+				<!--end-->
+				<div class="lastcall" same-height ng-show="company.website">
+					<!--Last call-->
+					<div class="top_head">
+						<i class="web_icon fa fa-globe"></i>
+						<h1>WEBSITE</h1>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<div class="lastcall_cnt cs_truncate">
+							<a href="{{appendProtocol(company.website)}}" target="company_web_blank" title="{{company.website}}">
+							<span class="tot" title="{{company.website}}">{{truncateProtocol(company.website)}}</span>
+							</a> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box_btm" style="background: none;">
+				<div class="springbot_cntright" style="width: 100%;">
+					<div ng-show="company.revenue.revenueComment" class="pressrelease-group" ng-hide="true">
+						<h2>REVENUE</h2>
+						<div class="add_cnt">
+							<p class="rev-title" title="{{company.revenue.revenueComment}}">&nbsp;{{company.revenue.revenueComment}}</p>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<div ng-show="company.pressReleases.length"
+						ng-repeat="(key, value) in company.pressReleases | groupBy:'featureType'"
+						class="pressrelease-group">
+						<more-less-press key="key" value="value"></more-less-press>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+			</div>
+			<!--box end-->
+		</div>
+		<div style='clear: both;'></div>
+	</div>
+</div>
+<div class="back-to-top" scroll ng-show="scrolled">
+	<a href ng-click="toTop()"><span
+		class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></a>
+</div>

@@ -1,0 +1,218 @@
+<div class="cls_wrapper company-profile-summary" ng-controller="CompanyProfileSummary">
+	<h1 class="no-background header-font-size">Deal Profiles</h1>
+		<form ng-submit="searchCompanyByName();" ng-hide="true">
+			<div class="enter_question">
+	       		 <input placeholder="Search by company name ..." ng-model="searchString" type="text"  id="inputSuccess4" class="form-control">
+	       			<a title="Click to Find" href="" class="main-search-icon-holder">
+						<span class="glyphicon glyphicon-search main-search-icon" ng-click="searchCompanyByName();"></span>
+					</a>
+	        </div>
+        </form>
+		<div class="floatingPanel">
+			<ul>
+            	<li ng-repeat="data in companyGroupList">
+                    <input class="mycheckbox" type="checkbox" value="data.groupName" ng-model="data.checked" ng-click="selectedCompanyGroup(data.groupName)">
+                    <label for="c1">{{data.groupName}}</label>
+                </li>
+            </ul>
+		</div>
+	<div ng-show="noResult" class="col-md-12 alert alert-danger"
+			style="margin-top: 20px;" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span> No profile found for the given input.
+		</div>
+	<div ng-show="!noResult">
+        <div class="general_info shadow-glow"  ng-repeat="group in profileGroupArray" ng-show="group.groupName =='General Info'"><!--general_info start-->
+			<div class="">
+				<h1 class="align-left-padding upper-case border-bottom">
+					<i class="fa fa-info-circle little-margin-right"></i>General
+					Information
+				</h1>
+				<div class="header-box">
+					<div class="springbot_box">
+						<a href="{{appendProtocol(website)}}" target="company_web_blank" title="">
+							<img
+							ng-src="{{generalInfoCompanyLogo ? ('../images/deals-logo/' + generalInfoCompanyLogo) : '../images/logo-not-available.png' }}"
+							title="{{website}}" />
+						</a>
+					</div>
+					<div class="pull-left" style="width: 92%">
+						<div class="col-lg-12 box_top margin-top-small">
+							<div class="cls_webtrend">
+								<span>{{generalInfoCompanyName}}</span>
+							</div>
+							<div class="col-lg-5 location">
+								<i ng-show="generalInfoLocation" class="location_ico margin_top"></i>
+								<p class="margin_top">{{generalInfoLocation}}</p>
+								<p ng-if="alertHistoryDetails.salesforce" class="sourceImg margin_small_top">
+									<a
+										ng-href="https://na29.salesforce.com/{{alertHistoryDetails.salesforceAccountId}}"
+										target="salesforce_blank"> <img class="salesforce"
+										ng-src="../images/logo/salesforce.png" title="Salesforce" />
+									</a>
+								</p>
+								<p ng-if="alertHistoryDetails.mattermark" class="sourceImg margin_small_top">
+									<a ng-href="{{alertHistoryDetails.mattermarkUrl}}" target="mattermark_blank">
+										<img class="mattermark" ng-src="../images/logo/mattermark.png"
+										title="Mattermark" />
+									</a>
+								</p>
+								<p ng-if="alertHistoryDetails.linkedin" class="sourceImg margin_small_top">
+									<a
+										ng-href="https://www.linkedin.com/company/{{alertHistoryDetails.linkedinCompanyId}}"
+										target="linkedin_blank"> <img class="linkedin"
+										ng-src="../images/logo/linkedin.png" title="Linkedin" />
+									</a>
+								</p>
+								<p ng-if="alertHistoryDetails.glassdoor" class="sourceImg margin_small_top">
+									<a ng-href="http://www.glassdoor.com/Reviews/index.htm"
+										target="glassdoor_blank"> <img class="glassdoor"
+										ng-src="../images/logo/glassdoor.png" title="Glassdoor" />
+									</a>
+								</p>
+							</div>
+							<div class="pull-right owner" ng-show="generalInfoAccountOwner">
+								<span>Account Owner :</span> <span>{{generalInfoAccountOwner}}</span>
+							</div>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+			<div class="padding-left-deal">
+        	<p class="description margin-top-small">
+            	{{generalInfoDescription}}
+            </p>
+            <div class="col-lg-12 no-padding result-row-wrapper margin-bottom-medium" ng-show="group.groupName =='General Info'">
+            	<div class="lastraise" ng-show="data.displayValue && data.displayName != 'Link to Salesforce'"  ng-repeat="data in group.displayDetails" same-height style="width:19% !important;">
+					<!--Last Raise-->
+					<div class="top_head">
+						<h1 class="upper-case " title="{{data.displayName}}">
+	            			<i ng-class="addClassForMetric(data.displayName)"></i>
+	            			{{data.displayName}}</h1>
+					</div>
+					<div class="btm_cnt adjust-widget">
+						<h2 title=""></h2>
+						<div class="value_right">
+							<a target="company_web_blank" ng-if="data.displayName == 'Website'" href="{{appendProtocol(data.displayValue)}}">{{truncateProtocol(data.displayValue)}}</a>
+							<p ng-hide="data.displayName == 'Website' || data.displayName == 'Link to Salesforce'" class="align-left-padding">{{data.displayValue}}</p>
+						</div>
+					</div>
+				</div>
+           </div>
+           <div style="clear: both;"></div>
+           </div>
+           <div style="clear: both;"></div>
+           </div>
+        </div>
+        <div ng-repeat="group in companyGroupList" ng-if="alertHistoryDetails.pressReleases.length" ng-show="group.groupName =='Alert History'">
+        <div class="general_info shadow-glow" ng-show="alertHistoryDetails && group.checked">
+        	<div class="">
+	        	<h1 class="align-left-padding upper-case border-bottom"><i class="fa fa-file-text-o little-margin-right"></i>Alert History</h1>
+	            <div class="trends padding-left-deal">
+	            	<div ng-show="alertHistoryDetails.pressReleases.length"
+							ng-repeat="(key, value) in alertHistoryDetails.pressReleases | groupBy:'featureType'"
+							class="alert-history-profile border-btm">
+							<more-less-press key="key" value="value"></more-less-press>
+							<div style="clear: both;"></div>
+					</div>
+	             </div>
+	             <div style="clear: both;"></div>
+             </div>
+        </div>
+        </div>
+       <div style="clear: both;"></div>
+       
+       
+       <div class="fundraising_history shadow-glow" ng-show="showFundRaiseDetails && !noResult"><!--fundraising_history start-->
+        	<div class="lastraise_details">
+        	<h3 class="align-left-padding upper-case">
+			            			<i ng-class="addClassForMetric(fundRaiseDetails.groupName)"></i>
+			            	Fundraising History</h3>
+                <table class="table style_table">
+			                        <tbody>
+			                            <tr>
+			                                <td width="270">Last raise date</td>
+			                                <td width="210">{{companyDetails.mm_last_fund_date}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Amount of last raise</td>
+			                                <td width="210">${{toMillion(companyDetails.mm_last_fund)}}M</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Total amount raised to date</td>
+			                                <td width="210">${{toMillion(companyDetails.mm_total_fund)}}M</td>
+			                            </tr>
+			                        </tbody>
+			                    </table>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6" ng-show="companyDetails.mm_total_fund">
+                     <div class="addTotalText">Total Funding:<br>${{toMillion(companyDetails.mm_total_fund)}}M</div>  
+                    <div class="chartSection" id="fundRaiseChart"></div>                   		
+				</div>
+        </div><!--fundraising_history end-->
+       
+       <div class="fundraising_history shadow-glow" ng-show="showCompanyScaleDetails && !noResult"><!--fundraising_history start-->
+        	<div class="lastraise_details">
+        	<h3 class="align-left-padding upper-case">
+			            			<i ng-class="addClassForMetric(companyScaleDetails.groupName)"></i>
+			            	Company Size / Scale</h3>
+                <table class="table style_table">
+			                        <tbody>
+			                            <tr>
+			                                <td width="270">Employee Count</td>
+			                                <td width="210">{{companyDetails.li_emp_count}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Job Count</td>
+			                                <td width="210">{{companyDetails.li_job_count}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Indication of revenue</td>
+			                                <td width="210">{{companyDetails.sfc_revenue_comment}}</td>
+			                            </tr>
+			                        </tbody>
+			                    </table>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                    <div class="chartSection" id="companyScaleChart"></div>                    		
+				</div>
+        </div><!--fundraising_history end-->
+       
+       
+        <div class="contact_history shadow-glow" ng-show="showContactHistoryDetails && !noResult"><!--fundraising_history start-->
+        	<div class="lastraise_details">
+        	<h3 class="align-left-padding upper-case">
+			            			<i ng-class="addClassForMetric(contactHistoryDetails.groupName)"></i>
+			            	Contact History</h3>
+                <table class="table style_table">
+			                        <tbody>
+			                            <tr>
+			                                <td width="270">Date</td>
+			                                <td width="210">{{companyDetails.sfc_date}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Category</td>
+			                                <td width="210">{{companyDetails.sf_last_activity_type}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Subject</td>
+			                                <td width="210">{{companyDetails.sfc_subject}}</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="270">Participants</td>
+			                                <td width="210">{{companyDetails.sfc_participants}}</td>
+			                            </tr>
+			                        </tbody>
+			                    </table>
+            </div>
+        </div><!--fundraising_history end-->
+        
+       </div>
+  
+<div class="clear"></div>
+
+<div class="back-to-top" scroll ng-show="scrolled">
+	<a href ng-click="toTop()"><span
+		class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></a>
+</div>

@@ -1,0 +1,91 @@
+@CHARSET "ISO-8859-1";
+
+/* Used when same style can be used for all themes */
+.transparent-button, 
+.transparent-button:active, 
+.transparent-button:hover, 
+.transparent-button:focus {color: #fff; background-color: transparent; border-color: #494949;}
+.transparent-dropdown{color: #fff; border-color: #fff; background-color: black; border-color: #494949;}
+.transparent-dropdown li> a{color: #fff}
+.transparent-text	{border:1px solid #494949; border-radius:0px; 
+								-webkit-border-radius:0px;
+								-o-border-radius:0px;
+								-ms-border-radius:0px; background:none; position:relative; color:#fff; font:12px 'Open Sans', sans-serif;  }
+
+/* Searchable dropdown customization */ 
+.selectize-input, .selectize-control.single .selectize-input.input-active {
+	border-radius:0px; 
+	-webkit-border-radius:0px;
+	-o-border-radius:0px;
+	-ms-border-radius:0px;
+	color: #fff; background-color: transparent; border-color: #494949;
+}
+.selectize-input.focus, .selectize-input.selectize-focus {
+	border-color: #494949 ! important;
+}
+.selectize-control.single .selectize-input:after {
+	border-color: #fff transparent transparent transparent;
+}
+.selectize-input, .selectize-input input {
+	color: #fff!important;
+}
+.selectize-input input::-webkit-input-placeholder {  color: #fff!important; }
+.selectize-input input::-moz-placeholder { color: #fff!important; }
+.selectize-input input:-moz-placeholder {  color: #fff!important; }
+.selectize-input input:-ms-input-placeholder {  color: #fff!important; }
+
+.selectize-dropdown-content {
+	background: none repeat scroll 0 0 black!important;
+    color: #fff!important;
+    font-size: 14px !important;
+    font-weight: 400!important;
+    max-height: 400px;
+    margin-top: -6px;
+    border-color: #494949!important;
+}
+
+.ui-select-choices-group-label, .selectize-dropdown [data-selectable], .selectize-dropdown .optgroup-header {
+	font-family: "Open Sans",sans-serif !important;
+}
+
+.selectize-dropdown .active {
+	background : #f5f5f5!important;
+	color : #000!important;
+}
+
+.selectize-dropdown, .selectize-dropdown.form-control {
+	border-color: #494949!important;
+}
+
+/* Used when style has to be different for different themes */							
+.primary-button, 
+.primary-button:active, 
+.primary-button:hover, 
+.primary-button:focus {color: #fff; background-color: transparent; border-color: #86badd;}
+.primary-dropdown{color: #fff; background-color: black; border-color: #86badd;}
+.primary-dropdown li> a{color: #fff}
+.primary-text	{border:1px solid #86badd; border-radius:0px; 
+								-webkit-border-radius:0px;
+								-o-border-radius:0px;
+								-ms-border-radius:0px; background:none; position:relative; color:#fff; font:12px 'Open Sans', sans-serif;  }
+
+								
+.scrollable-menu {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
+.sharp-border {border-radius: 0px;}
+
+/* button */
+
+.btn {border-radius: 0px;}
+
+/*Modal custom*/
+.modal-content {border-radius: 0px;border: 1px solid #225f8e}
+.modal-header {background-color: #225f8e;border-bottom: 0px}
+.modal-header > button {font-size: 32px;color: #fff;opacity: 1;}
+.modal-footer {border-top: 0px;background-color:#000000;}
+.modal-title{color:#fff;}
+.modal-body{background-color:#000000 }
+.modal-body label {color:#96d5ff;}

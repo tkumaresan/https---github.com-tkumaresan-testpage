@@ -1,0 +1,162 @@
+@charset "utf-8";
+/* CSS Document */
+
+.cls_wrapper h1     		{ color:#fff; }
+.top_head, .springbot_cntright h2					{ background:#225f8e; }
+.btm_cnt					{ background:#00305b; }
+.box 						{ border:2px solid #113653; }
+.springbot_box 				{ border:1px solid #113653; }
+.employee 					{ border:1px solid #113653; }
+.job_posting 				{ border:1px solid #113653; }
+.lastraise 					{ border:1px solid #113653; }
+.lastcall 					{ border:1px solid #113653; }
+.lasttouch 					{ border:1px solid #113653; }
+.box_top a 				{ color:#96d5ff;  }
+.location p 				{ color:#96d5ff; }
+.intrest span  				{ color:#96d5ff; }
+.intrest p   				{ color:#96d5ff; }
+.employee.active span       { color:#fff; }
+.lastcall span   			{ color:#96d5ff; }
+.job_posting.active span    { color:#fff; }
+.lastraise.active span      { color:#fff; }
+.lastcall.active span       { color:#fff; }
+.lastcall.active span.date  { color:#fff !important; }
+.employee span   			{ color:#96d5ff; }
+.btm_cnt.active  span       { color:#fff; }
+.btm_cnt h2 				{ color:#96d5ff; }
+.value_right p  			{ color:#fff; }
+.job_posting span   	    { color:#96d5ff;  }
+.lastraise span   			{ color:#96d5ff;  }
+span.date                   {  color:#32546f !important; }
+.lastcall_cnt span   		{ color:#96d5ff; }
+.lasttouch span   			{ color:#96d5ff;  }
+.leftcnt_top 				{ border-bottom:1px solid #0b2234; border-top: 1px solid #0b2234;}
+.springbot_cntright h2 		{ border-bottom:1px solid #0b2234;  }
+.leftcnt_top p  			{ color:#86badd; }
+.lastcall_cnt span   		{ color:#96d5ff; }
+.leftcnt_btm p  			{ color:#86badd; }
+.springbot_cntright h2 		{  color:#fff; }
+.add_cnt					{ background: #00305b;}
+.add_cnt a					{ color:#86badd;}
+.add_cnt p  				{   color:#86badd; }
+.add_cnt span 				{ color:#32546f;  } 
+.box_btm					{  background:url(../../images/blue/divider.png) repeat-y; background-position:348px 0px; }
+.employee.active .top_head { background:#62bafa; } 
+.employee.active .btm_cnt  { background:#3283d2; } 
+
+
+.job_posting.active .top_head { background:#62bafa; } 
+.job_posting.active .btm_cnt { background:#3283d2; } 
+
+
+.lastraise.active .top_head { background:#62bafa; } 
+.lastraise.active .btm_cnt { background:#3283d2; } 
+
+
+.lastcall.active .top_head { background:#62bafa; } 
+.lastcall.active .btm_cnt { background:#3283d2; } 
+
+.location_ico   		{  background:url(../../images/blue/sprites.png) no-repeat; 
+								background-position:-27px -4px; }
+.icon_user   			{ background:url(../../images/blue/sprites.png) no-repeat; 
+								background-position:-171px -4px; }
+span.link   			{ background:url(../../images/blue/sprites.png) no-repeat; 
+								background-position:-53px -28px;  }
+								
+a.rating,a.rating.active:hover				{ background:url(../../images/blue/sprites.png) no-repeat; 
+								background-position:-6px -31px; }
+								
+a.rating:hover, a.rating.active              {  background-position:-6px -53px; }
+								
+a.disable 					{   background:url(../../images/blue/sprites.png) no-repeat; 
+								background-position:-28px -31px; }
+a.disable:hover             {  background-position:-28px -53px;   }	
+.cls_webtrend				{ color: #96d5ff;}
+.search_filter				{ background: #030407;}
+/*****************DEAL PROFILE and Find Deal ***********
+*******************************************************************************/
+
+.check_all  				{ background:#000; color:#fff; }
+.toggle-open table  		{ color:#86badd; }
+.check_all .table-responsive  				{ border:1px solid #455c6d; }
+.check_all .table-responsive tr    			{ border-top:1px solid #0c2c45; }
+#select3 .selectWrapper      		{ border-radius:0px; border-color:#455c6d; }
+#select4 .selectWrapper       		{ border-radius:0px; border-color:#455c6d; }
+.general_info   					{ background:#030407; color:#fff; border:1px solid #103555; }
+.fundraising_history				{ background:#030407; border:1px solid #103555; }
+.lastraise_details  				{ color:#fff;}
+.lastraise_details h3  				{ color:#fff; border-bottom:1px solid #0b2234;  }
+.style_table tr 					{ border-bottom:1px solid #0b2234;  }
+.fundraising_history h2				{ border-bottom:1px solid #0b2234;  font-size:14px; color:#fff;} 
+.trends span  						{ color:#86badd;  }
+.abt_company						{ background:#030407;}
+.comp_size   						{ color:#fff;}
+.comp_size h3  						{ color:#fff; border-bottom:1px solid #0b2234; }
+.contact_history   					{ background:#030407; color:#fff; border:1px solid #103555; }
+.contact_history  h3  				{ color:#fff; border-bottom:1px solid #0b2234; }
+.check_all ul li label              { color:#96d5ff; font-weight:400; font-size:14px; }
+.check_all ul 						{ border:1px solid #0b2234; }
+.employees_range   					{ background:#030407; border:1px solid #103535; color:#fff; }
+.refine a  							{ color:#fff;  }
+.refine a:hover  					{ color:#96d5ff; } 
+.refine a:focus  					{ color:#96d5ff; }
+/* input[type="checkbox"] {
+    display:none;
+} */
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-1px 8px 0 0;
+    vertical-align:middle;
+   background:url(../images/sprites.png) no-repeat;
+	background-position:-3px -77px;
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label   	{ font-weight:700;  }
+input[type="checkbox"]:checked + label span {
+    
+	background:url(../images/sprites.png) no-repeat;
+	background-position:-3px -97px;
+}
+.btn-save   								{ border:1px solid #96d5ff; color:#96d5ff; background-color:transparent;  }
+.btn-save:hover 							{ background:#225f8e; border:1px solid #225f8e; color:#fff; }
+.slider .ui-slider-range {    background: #729fcf;}
+.company-widget {    background: #030407;border: 1px solid #103535;color: #fff;}
+.company-widget table td  	{ border-bottom:1px solid #103535;  }
+.company-widget .topmain_right h2   { color:#86badd; }
+.company-widget .topmain_right 		{ color:#86badd; }
+.topmain_right h2     		{ color:#86badd; }
+.topmain_right 				{color:#86badd;  }
+.alert-history-profile .moreLessText		{ }
+.alert-history-profile h2					{ color: #fff;}
+.company-profile-summary h1					{ background: #225f8e;}
+.company-profile-summary h3					{ background: #225F8E; width: 100%; padding: 10px 0;margin: 0px;}
+.company-profile-summary .bordor-box		{ border: 1px solid #0B2234;}
+.alert-history-profile h2		 			{ border-bottom: 1px solid #0b2234; background: #225f8e;}
+.bordor-box									{ border: 1px solid #0b2234;}
+.value_right a 								{ color:#fff; }
+
+/*************ASKWATSON**************/
+
+.main_askwatson   							{ background:#030407; border:1px solid #113653; }
+.askwatson_cont  							{ border-bottom:1px solid #113653; }
+.topic_name  								{ color:#fff; }
+.cont_desc   								{ color:#86badd; }
+.confidence_level  							{ color:#11b9ff;  }
+a.morelink   								{ border:1px solid #237394;   }
+a.morelink:hover   							{ color:#96d5ff; border:1px solid #96d5ff; text-decoration:none;  }
+
+/**********Create Model **************
+*****************************************/
+.score_value     							{ color:#fff; }
+.model_selection label    					{ font-size:14px; color:#fff; font-weight:normal; }
+.no_rows input[type="number"] 				{ border:1px solid #103555; background-color:transparent; }
+.frm_row input[type="text"]  				{ border:1px solid #103555; background-color:transparent; }	
+.frm_row input[type="number"]  				{ border:1px solid #103555; background-color:transparent; }	
+.model_selection #select4 .selectWrapper	{ border:1px solid hsl(208, 68%, 20%);  }
+.source #select3 .selectWrapper 			{ border:1px solid hsl(208, 68%, 20%);  }
+#user-model .btn-group button				{ color:#fff; border: 1px solid #103555}
+#myModal									{ color:#fff;}
+
+.chart-label-color,.addTotalText			{ color:#fff !important;}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration debug="true" scan="true" scanPeriod="5 seconds">
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <!-- daily rolling file appender -->
+  <appender name="rollingFileLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${log.path}/coalesce.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+    </encoder>
+    <prudent>true</prudent>
+  </appender>
+  
+  <!-- suppressing the logs of 3rd party framework classes -->
+  <logger name="org.hibernate" level="INFO" />
+  <logger name="org.springframework" level="INFO" />
+  <logger name="org.apache.commons.beanutils" level="INFO" />
+  <logger name="org.dozer" level="INFO" />
+  <logger name="org.apache.jasper" level="INFO" />
+  <logger name="org.apache.tomcat" level="INFO" />
+
+  <root>
+    <level value="INFO" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="rollingFileLog" />
+  </root>
+</configuration>
+

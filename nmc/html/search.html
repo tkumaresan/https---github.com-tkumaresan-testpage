@@ -1,0 +1,108 @@
+<div class="cls_wrapper" ng-controller="Search">
+        <div class="search_filter" ng-hide="true">
+            <h1>Search</h1>
+            <form ng-submit="search();" >
+            <div class="enter_question" scroll  ng-class="{'floatingPanel search-float-panel' : scrolled}">
+	       		 <input placeholder="Enter Search Name ..." ng-model="searchValue" type="text"  id="inputSuccess4" class="form-control">
+	       			<a title="Click to Find" href="" ng-click="search();" class="main-search-icon-holder">
+	       				<span class="glyphicon main-search-icon" ng-class="{' glyphicon-search':!loadingResults, 'glyphicon-refresh glyphicon-refresh-animate':loadingResults}"></span>
+					</a>
+	        </div>
+	        </form>
+			<div ng-hide="errorMessage == undefined || errorMessage == null || errorMessage == ''" class="col-md-12 alert alert-danger"
+				role="alert" style="margin-top:25px;">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only">Error:</span> {{errorMessage}}
+			</div>
+		</div>
+		<div style="display:none;" class="refine"><!--refine start-->
+        	<div class="check_all">
+                	<div class="selectall">
+                    	<table cellspacing="5" class="tb_title">
+                        	<tbody>
+                            <tr>
+                            	<td width="500">Refined By</td>
+                                <td width="500" align="right">
+                                	<i class="fa fa-plus"></i>&nbsp;<a href="#">Add</a>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <div class="table-responsive employees_range">
+                    	<table class="table">
+                        	<tr>
+                            	<td width="200">Employes</td>
+                            	<td width="300">
+                                	<div class="slider slider-light"></div>
+                                    <table>
+                                    	<tr>
+                                        	<td width="125" align="left">Low</td>
+                                            <td width="125" align="right">High</td>
+                                        </tr>
+                                    </table>
+                                    </td>
+                            
+                            	<td width="200">States</td>
+                            	<td width="300">
+                                	<input type="checkbox" id="c9" name="or" />
+                            		<label for="c9"><span></span>OR</label>
+                                    <input type="checkbox" id="c10" name="nc" />
+                            		<label for="c10"><span></span>NC</label>
+                                </td>
+                            </tr>
+                        </table>
+                    	
+                    </div>
+                    <div class="clearfix"></div>
+                	
+				</div>
+        
+        
+        </div><!--refine end-->
+
+		<table class="border-spacing">
+			<tr ng-show="displayResult" class="result-row-wrapper"  ng-repeat="dataResult in data" style="margin-bottom:10px !important;">
+				<td ng-hide="result.hide" class="col-half company-widget" ng-repeat="result in dataResult">
+			           	<div class="top_main">
+				               <img height="40px" width="40px" ng-src="{{result.li_local_logo_url ? ('../images/deals-logo/' + result.li_local_logo_url)  : (result.li_logo_url ? result.li_logo_url : '../images/logo-not-available.png')}}" alt="Logo-Image">
+			                   <div class="topmain_right">
+			                   <h2><a ng-href="#/company-profile-summary?companyId={{result.id}}"	target="profile_blank"> {{result.name}}</a></h2>
+			                       <span class="close_ico pull-right"><a href  ng-click="dataResult.splice($index,1)" class="fa fa-times"></a></span>
+			                       <div class="col-lg-1 pull-right">
+			                       	<i ng-if="result.score > 0.7" class="green_signal fa fa-signal" title="High"></i>
+			                       	<i ng-if="result.score > 0.4 && result.score < 0.7" class="orange_signal fa fa-signal" title="Medium"></i>
+			                       	<i ng-if="result.score < 0.4" class="red_signal fa fa-signal" title="Low"></i>
+			                       </div>
+			                       <span class="pull-right" ng-if="result.sf_billing_city_state"><i class="location_area"></i>{{result.sf_billing_city_state}}</span>
+			                   </div>
+			               </div>
+			           	<table>
+							<tr>
+								<td width="100">Employees</td>
+								<td width="120">{{result.li_emp_count}}</td>
+								<td width="120">Follow Up Date</td>
+								<td width="120">{{result.sf_follow_up_date}}</td>
+							</tr>
+							<tr>
+								<td width="100">Last Call</td>
+								<td width="120">{{result.sf_last_activity_date}}</td>
+								<td width="120">Interest Level</td>
+								<td width="120">{{result.sf_interest_level}}</td>
+							</tr>
+							<tr>
+								<td width="100">Investment Summary</td>
+								<td width="360" colspan=3>{{result.sf_investment_summary}}</td>
+							</tr>
+						</table>
+			</td>
+			</tr>
+		</table>
+
+<div class="clear"></div>
+</div>
+<div class="back-to-top" scroll ng-show="scrolled">
+	<a href ng-click="toTop()"><span
+		class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></a>
+</div>
+<div  class="footer_main">
+</div>
