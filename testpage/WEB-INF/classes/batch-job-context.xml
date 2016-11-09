@@ -1,0 +1,121 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/batch
+        http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    ">
+
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository" />
+        <property name="taskExecutor" ref="taskExecutor"/>
+   	</bean>
+
+    <bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="transactionManager" ref="transactionManager" />
+        <property name="isolationLevelForCreate" value="ISOLATION_DEFAULT" />
+    </bean>
+
+    <bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+	<bean id="taskExecutor"
+	    class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	    <property name="corePoolSize" value="5" />
+	    <property name="maxPoolSize" value="5" />
+	</bean>
+    <bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+        <property name="jobRegistry" ref="jobRegistry" />
+    </bean>
+
+    <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+
+    <bean id="monthlyBatchCompanyItemReader" class="com.ngp.tracker.batch.MonthlyBatchCompanyItemReader" />
+
+    <bean id="eagerlyBatchCompanyItemReader" class="com.ngp.tracker.batch.EagerlyBatchCompanyItemReader" />
+
+    <bean id="monthlyCompanyItemWriter" class="com.ngp.tracker.batch.MonthlyCompanyItemWriter" />
+
+    <bean id="companyBatchProcessLogger" class="com.ngp.tracker.batch.CompanyBatchJobListener" />
+
+    <bean id="accessTokenReader" class="com.ngp.tracker.batch.SocialMediumTokenItemReader" />
+
+    <bean id="accessTokenWriter" class="com.ngp.tracker.batch.SocialMediumTokenItemWriter" />
+
+    <!-- TODO: check if the repository writer can be used here -->
+    <bean id="eagerlyCompanyItemWriter" class="com.ngp.tracker.batch.EagerlyCompanyItemWriter" />
+
+    <!-- spring batch job's -->
+    <batch:job id="accessTokenGenerationBatch">
+        <batch:step id="accessTokenGenerationBatch-step">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="accessTokenReader" writer="accessTokenWriter" commit-interval="2" />
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <batch:job id="eagerlyDataExtractionBatch">
+        <batch:step id="eagerlyDataExtractionBatch-step">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="eagerlyBatchCompanyItemReader" writer="eagerlyCompanyItemWriter" commit-interval="1" />
+                <batch:listeners>
+                    <batch:listener ref="companyBatchProcessLogger" />
+                </batch:listeners>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <batch:job id="monthlyDataExtractionBatch">
+        <batch:step id="monthlyDataExtractionBatch-step">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="monthlyBatchCompanyItemReader" writer="monthlyCompanyItemWriter" commit-interval="5" />
+                <batch:listeners>
+                    <batch:listener ref="companyBatchProcessLogger" />
+                </batch:listeners>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <!-- quartz scheduling the batch job's -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <bean id="accessTokenCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+                    <property name="jobDetail" ref="accessTokenJobDetail" />
+                    <property name="cronExpression" value="0 0 0 * * ? *" /><!-- daily at 12.00 AM -->
+                </bean>
+                <bean id="monthlyCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+                    <property name="jobDetail" ref="monthlyJobDetail" />
+                    <property name="cronExpression" value="0 0 1 * * ? *" /> <!-- daily at 1.00 AM -->
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+     <bean id="accessTokenJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.ngp.tracker.batch.quartz.TrackerBatchJob" />
+        <property name="durability" value="true" />
+        <property name="group" value="quartz-batch" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="jobName" value="accessTokenGenerationBatch" />
+                <entry key="jobLocator" value-ref="jobRegistry" />
+                <entry key="jobLauncher" value-ref="jobLauncher" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="monthlyJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.ngp.tracker.batch.quartz.TrackerBatchJob" />
+        <property name="durability" value="true" />
+        <property name="group" value="quartz-batch" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="jobName" value="monthlyDataExtractionBatch" />
+                <entry key="jobLocator" value-ref="jobRegistry" />
+                <entry key="jobLauncher" value-ref="jobLauncher" />
+            </map>
+        </property>
+    </bean>
+
+</beans>

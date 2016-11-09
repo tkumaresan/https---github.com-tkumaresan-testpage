@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <global-method-security pre-post-annotations="enabled" />
+
+    <http auto-config="true" use-expressions="true">
+        <!-- callback URL's does not require authentication -->
+
+        <intercept-url pattern="/html/**" access="permitAll" />
+        <intercept-url pattern="/resources/**" access="permitAll" />
+        <intercept-url pattern="/favicon.ico" access="permitAll" />
+
+        <intercept-url pattern="/callback/**" access="permitAll" />
+        <intercept-url pattern="/login" access="permitAll" />
+
+        <intercept-url pattern="/**" access="isAuthenticated()" />
+
+        <form-login login-page="/login" default-target-url="/company/list" authentication-failure-url="/login?error" username-parameter="username" password-parameter="password" />
+        <logout logout-success-url="/login?logout" />
+    </http>
+
+    <!-- custom salesforce authentication using username-password approach -->
+    <!-- <authentication-manager>
+        <authentication-provider ref="salesForceAuthenticationProvider" />
+        </authentication-manager> -->
+
+    <!-- <beans:bean name="salesForceAuthenticationProvider" class="com.ngp.tracker.web.auth.SalesForceAuthenticationProvider" /> -->
+
+    <!-- authentication through schema -->
+    <authentication-manager>
+        <authentication-provider user-service-ref="userDetailsService" />
+    </authentication-manager>
+
+    <beans:bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <beans:property name="dataSource" ref="dataSource" />
+        <!-- disabled the groups  -->
+        <beans:property name="enableGroups" value="false" />
+        <beans:property name="enableAuthorities" value="true" />
+    </beans:bean>
+
+    <beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <beans:property name="jndiName">
+            <beans:value>java:comp/env/jdbc/trackerMySqlDS</beans:value>
+        </beans:property>
+    </beans:bean>
+
+</beans:beans>

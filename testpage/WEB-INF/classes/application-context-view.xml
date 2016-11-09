@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+
+	<!-- Enables the annotations programming -->
+	<context:annotation-config />
+
+	<!-- Scans controller classes via @Component -->
+	<context:component-scan base-package="com.ngp.tracker.web" />
+
+	<!-- Enables annotation-driven Spring MVC Controller programming -->
+	<mvc:annotation-driven />
+
+	<!-- Negotiation strategy: 1. content type in header 2. extension in the 
+		URL path e.g '/user.json' -->
+	<bean id="contentNegoManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" /> <!-- Enables view selection based on extension in the URL path for ajax calls -->
+		<property name="ignoreAcceptHeader" value="false" /> <!-- Enables view selection based on contentType in header for REST calls -->
+		<property name="useJaf" value="false" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="json" value="application/json" />
+				<!-- <entry key="xls" value="application/vnd.ms-excel" /> -->
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager" ref="contentNegoManager" />
+
+		<property name="viewResolvers">
+			<list>
+				<!-- <bean class="org.springframework.web.servlet.view.XmlViewResolver"> 
+					<property name="location" value="/WEB-INF/excel/spreadsheet-views.xml" /> 
+					</bean> -->
+
+				<!-- JSP view -->
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<!-- Example: a logical view name of 'contacts' is mapped to '/WEB-INF/views/contacts.jsp' -->
+					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="suffix" value=".jsp" />
+				</bean>
+			</list>
+		</property>
+
+		<property name="defaultViews">
+			<list>
+				<!-- JSON view -->
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+					<property name="objectMapper" ref="jacksonObjectMapper" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- setting maximum upload size -->
+		<property name="maxUploadSize" value="1000000" />
+
+	</bean>
+
+	<!-- welcome page -->
+	<mvc:view-controller path="/" view-name="redirect:company/list" />
+	<mvc:view-controller path="/bulkUpload" view-name="company/upload" />
+	<mvc:view-controller path="/faq" view-name="faq" />
+
+	<!-- Configures a handler for serving static resources by forwarding to 
+		the servlet container's default servlet. -->
+	<!-- serves static resources like (*.html, ...) from src/main/webapp/ -->
+	<mvc:default-servlet-handler />
+
+	<mvc:resources mapping="/resources/**" location="/" />
+
+	<mvc:interceptors>
+		<!-- Changes the locale when a 'lang' request parameter is sent; e.g. /?lang=de -->
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+	</mvc:interceptors>
+
+	<!-- Application Message Bundle -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:/messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+	</bean>
+</beans>

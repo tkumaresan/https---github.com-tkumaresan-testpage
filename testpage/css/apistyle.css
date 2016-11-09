@@ -1,0 +1,54 @@
+@CHARSET "ISO-8859-1";
+
+#apiTable{
+	background: #fff;
+	border: 1px solid #CFCFCF;
+	color: #848484;
+	/* padding: 12px; */
+ }
+input[type="text"] {
+	width: 350px;
+	height: 30px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-width: 1px;
+	border-color: #D8D8D8;
+	color: #848484;
+}
+
+#buttons{
+	padding-left: 475px;
+	padding-top: 15px;
+	padding-bottom: 25px;
+}
+
+#submit{
+	width: 100px;
+	background-color: #5b79af;
+	height: 33px;
+	color: white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.fright #submit{
+    margin-top: 7px;
+	width: 250px;
+}
+#cancel{
+	padding-left: 20px;
+	text-decoration: none;
+}
+h2, th{
+	color: #5b79af;
+	font-family: Arail;
+}
+#statusMessage{
+	margin-left: 185px;
+	color: #008000;
+	font-size: small;
+}
+

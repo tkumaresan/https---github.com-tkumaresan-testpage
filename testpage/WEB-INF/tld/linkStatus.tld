@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib>
+    <tlibversion>1.0</tlibversion>
+    <jspversion>1.1</jspversion>
+    <shortname>linkstatus</shortname>
+    <info>Identifies appropriate image for status</info>
+    <tag>
+        <name>linkstatus</name>
+        <tagclass>com.ngp.tracker.web.tags.LinkStatusTag</tagclass>
+        <info>Identifies appropriate image for status</info>
+        <attribute>
+            <name>status</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>
